@@ -12,7 +12,6 @@ class SolutionsTest:
    *  drop[A]: List[A] x int -> List[A]
    *  append[A]: List[A] x List[A] -> List[A]
    *  flatMap: List[A] x (A -> List[B]) -> List[B]
-   *  map: List[A] x (A -> B) -> List[B]
    *
    * axioms:
    *  drop(Nil(), i) = Nil()
@@ -22,8 +21,6 @@ class SolutionsTest:
    *  append(Cons(h, t), Cons(h1, t1)) = Cons(h, append(t, Cons(h1, t1)))
    *  flatMap(Nil())(f) = Nil()
    *  flatMap(Cons(h,t))(v => f(v)) = append(f(h), flatMap(t)(f))
-   *  map(Nil())(x => mapper(x)) => Nil()
-   *  map(Cons(h, t)((x => mapper(x)) => 
    */
 
   val list: List[Int] = Cons(10, Cons(20, Cons(30, Nil())))
@@ -55,4 +52,7 @@ class SolutionsTest:
     assertEquals(Cons(11, Cons(21, Cons(31, Nil()))), map(list)(_+1))
     assertEquals(Cons("10", Cons("20", Cons("30", Nil()))), map(list)(_+""))
 
-
+  @Test
+  def testFilter(): Unit =
+    assertEquals(Cons(20, Cons(30, Nil())), filter(list)(_ >= 20))
+    assertEquals(Cons(10, Cons(30, Nil())), filter(list)(_ != 20))

@@ -24,3 +24,7 @@ object Solutions extends App:
       case Nil() => Nil()
     // d)
     def map[A,B](l: List[A])(mapper: A => B): List[B] = flatMap(l)(x => Cons(mapper(x), Nil()))
+    // e)
+    def filter[A](l: List[A])(pred: A => Boolean): List[A] = flatMap(l)(x => pred(x) match
+      case true => Cons(x, Nil())
+      case false => Nil())
