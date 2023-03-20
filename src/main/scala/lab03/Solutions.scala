@@ -2,6 +2,15 @@ package lab03
 
 object Solutions extends App:
 
+  enum Option[A]:
+    case Some(a: A)
+    case None()
+
+  object Option:
+    def fold[A](opt: Option[A])(df: A)(f: A => A): A = (opt, df) match
+      case (Some(a), _) => f(a)
+      case (_, d) => d
+
   enum List[A]:
     case Cons(head: A, tail: List[A])
     case Nil()
@@ -28,3 +37,9 @@ object Solutions extends App:
     def filter[A](l: List[A])(pred: A => Boolean): List[A] = flatMap(l)(x => pred(x) match
       case true => Cons(x, Nil())
       case false => Nil())
+
+    // Task 2
+    import Option.*
+    def max(l: List[Int]): Option[Int] = l match
+      case Cons(h, t) => Some(fold(max(t))(h)(_.max(h)))
+      case Nil() => None()

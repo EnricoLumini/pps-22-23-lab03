@@ -26,6 +26,7 @@ class SolutionsTest:
   val list: List[Int] = Cons(10, Cons(20, Cons(30, Nil())))
   val empty: List[Int] = Nil()
 
+  // Task 1 tests
   @Test
   def testDrop(): Unit =
     assertEquals(Cons(20, Cons(30, Nil())), drop(list, 1))
@@ -56,3 +57,11 @@ class SolutionsTest:
   def testFilter(): Unit =
     assertEquals(Cons(20, Cons(30, Nil())), filter(list)(_ >= 20))
     assertEquals(Cons(10, Cons(30, Nil())), filter(list)(_ != 20))
+
+  // Task 2 tests
+  import Option.*
+
+  @Test
+  def testMax(): Unit =
+    assertEquals(Some(25), max(Cons(10, Cons(25, Cons(20, Nil())))))
+    assertEquals(None(), max(Nil()))
