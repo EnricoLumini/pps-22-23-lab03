@@ -43,3 +43,25 @@ object Solutions extends App:
     def max(l: List[Int]): Option[Int] = l match
       case Cons(h, t) => Some(fold(max(t))(h)(_.max(h)))
       case Nil() => None()
+
+    // Task 4
+    def foldLeft[A, B](l: List[A])(d: B)(f: (B, A) => B): B = l match
+      case Cons(h, t) => foldLeft(t)(f(d, h))(f)
+      case Nil() => d
+
+    def foldRight[A, B](l: List[A])(d: B)(f: (A, B) => B): B = l match
+      case Cons(h, t) => f(h, foldRight(t)(d)(f))
+      case Nil() => d
+
+
+  // Task 3
+  import Person.*
+  import List.*
+
+  enum Person:
+    case Student(name: String, year: Int)
+    case Teacher(name: String, course: String)
+
+  def courses(l: List[Person]): List[String] = flatMap(l)(_ match
+    case Teacher(_, c) => Cons(c, Nil())
+    case _ => Nil())

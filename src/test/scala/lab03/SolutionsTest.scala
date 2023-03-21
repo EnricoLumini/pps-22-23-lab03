@@ -65,3 +65,37 @@ class SolutionsTest:
   def testMax(): Unit =
     assertEquals(Some(25), max(Cons(10, Cons(25, Cons(20, Nil())))))
     assertEquals(None(), max(Nil()))
+
+  // Task 3 tests
+  import Person.*
+
+  val students: List[Person] = Cons(Student("Enrico", 2000), Cons(Student("Giovanni", 1999), Cons(Student("Lorenzo", 2001), Nil())))
+  val teachers: List[Person] = Cons(Teacher("Viroli", "pps"), Cons(Teacher("Ricci", "cdp"), Cons(Teacher("Mirri", "web"), Nil())))
+  val persons: List[Person] = Cons(Student("Enrico", 2000), Cons(Teacher("Viroli", "pps"), Nil()))
+
+  @Test
+  def testCourses(): Unit =
+    assertEquals(Nil(), courses(students))
+    assertEquals(Cons("pps", Cons("cdp", Cons("web", Nil()))), courses(teachers))
+    assertEquals(Cons("pps", Nil()), courses(persons))
+
+  // Task 4 tests
+  val lst: List[Int] = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
+
+  @Test
+  def testFoldLeft(): Unit =
+    assertEquals(-16, foldLeft(lst)(0)(_ - _))
+    assertEquals(16, foldLeft(lst)(0)(_ + _))
+    assertEquals(32, foldLeft(lst)(0)(_ + _ * 2))
+    assertEquals(17, foldLeft(lst)(1)(_ + _))
+    assertEquals(5, foldLeft[Int, Int](Nil())(5)(_ + _))
+    assertEquals(16.1, foldLeft(lst)(0.1)(_ + _), 0)
+
+  @Test
+  def testFoldRight(): Unit =
+    assertEquals(-8, foldRight(lst)(0)(_ - _))
+    assertEquals(16, foldRight(lst)(0)(_ + _))
+    assertEquals(-15, foldRight(lst)(1)(_ * 2 - _))
+    assertEquals(2, foldRight(lst)(2)(_ * 0 + _))
+    assertEquals(5, foldRight[Int, Int](Nil())(5)(_ + _))
+    assertEquals(-7.5, foldRight(lst)(0.5)(_ - _), 0)
