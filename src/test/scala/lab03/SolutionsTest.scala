@@ -99,3 +99,30 @@ class SolutionsTest:
     assertEquals(2, foldRight(lst)(2)(_ * 0 + _))
     assertEquals(5, foldRight[Int, Int](Nil())(5)(_ + _))
     assertEquals(-7.5, foldRight(lst)(0.5)(_ - _), 0)
+
+  // Task 5 tests
+
+  @Test
+  def testStreamDrop(): Unit = {
+    val s = Stream.take(Stream.iterate(0)(_ + 1))(10)
+    val s2 = Stream.take(Stream.iterate(1)(_*2))(10)
+    assertEquals(Cons(6, Cons(7, Cons(8, Cons(9, Nil())))), Stream.toList(Stream.drop(s)(6)))
+    assertEquals(Cons(16, Cons(32, Cons(64, Cons(128, Cons(256, Cons(512, Nil())))))), Stream.toList(Stream.drop(s2)(4)))
+  }
+
+  @Test
+  def tesConstant(): Unit = {
+    assertEquals(Cons("x", Cons("x", Cons("x", Cons("x", Cons("x", Nil()))))), Stream.toList(Stream.take(Stream.constant("x"))(5)))
+  }
+
+  @Test
+  def testScanLeft(): Unit = {
+    val s: Stream[Int] = Stream.iterate(1)(_ + 1)
+    assertEquals(Cons(1, Cons(2, Cons(4, Nil()))), Stream.toList(Stream.scanLeft(Stream.take(s)(3))(1)(_ + _)))
+  }
+
+  val fibs: Stream[Int] = Stream.cons(0, Stream.scanLeft(fibs)(1)(_ + _))
+  @Test
+  def testFibs(): Unit = {
+    assertEquals(Cons(0, Cons(1, Cons(1, Cons(2, Cons(3, Cons(5, Cons(8, Cons(13, Nil())))))))), Stream.toList(Stream.take(fibs)(8)))
+  }
