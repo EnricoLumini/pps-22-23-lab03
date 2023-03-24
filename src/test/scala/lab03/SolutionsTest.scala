@@ -100,7 +100,7 @@ class SolutionsTest:
     assertEquals(5, foldRight[Int, Int](Nil())(5)(_ + _))
     assertEquals(-7.5, foldRight(lst)(0.5)(_ - _), 0)
 
-  // Task 5 tests
+  // Stream Tasks tests
 
   @Test
   def testStreamDrop(): Unit = {

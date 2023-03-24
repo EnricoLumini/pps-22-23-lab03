@@ -105,11 +105,10 @@ object Solutions extends App:
       case (Cons(_, tail), n) if n > 0 => drop(tail())(n - 1)
       case _ => stream
 
+    // Task 6
+    def constant[A](const: A): Stream[A] = iterate(const)(_ => const)
+
     // Task 7
     def scanLeft[A](stream: => Stream[A])(n: A)(f: (A, A) => A): Stream[A] = stream match
       case Cons(head, tail) => cons(n, scanLeft(tail())(f(n, head()))(f))
       case _ => Empty()
-
-
-    // Task 6
-    def constant[A](const: A): Stream[A] = iterate(const)(_ => const)
